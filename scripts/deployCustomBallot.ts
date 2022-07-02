@@ -55,6 +55,7 @@ async function main() {
   await CustomBallotContract.deployed();
   console.log("Completed");
   console.log(`Contract deployed at ${CustomBallotContract.address}`);
+  console.log(`Tx Hash: ${CustomBallotContract.deployTransaction.hash}`);
 }
 
 main().catch((error) => {
