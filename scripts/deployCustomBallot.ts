@@ -13,7 +13,7 @@ function convertStringArrayToBytes32(array: string[]) {
   return bytes32Data;
 }
 
-async function main() {
+export async function main() {
   // wallet creation
   const wallet =
     process.env.MNEMONIC && process.env.MNEMONIC.length > 0
