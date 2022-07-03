@@ -32,15 +32,23 @@ export async function main() {
     signer
   ) as CustomBallot;
 
-  const winningProposalIndex = await ballotContract.winningProposal();
-  console.log("winning proposal index", winningProposalIndex.toString());
-  const winningProposal = await ballotContract.proposals(winningProposalIndex);
-  console.log(
-    "winning proposal vote count",
-    winningProposal.voteCount.toString()
-  );
-  const winnerName = await ballotContract.winnerName();
-  console.log("winner name", ethers.utils.parseBytes32String(winnerName));
+  // fixed not counting proposals
+
+  try {
+    let i = 0;
+    let nameProposal = "";
+
+    while (true) {
+      const proposal = await ballotContract.proposals(i);
+      nameProposal = ethers.utils.parseBytes32String(proposal.name);
+      console.log(
+        ` |-Proposal ${i}: ${nameProposal} - Votes: ${proposal.voteCount.toString()}`
+      );
+      i++;
+    }
+  } catch (e) {
+    console.log("End of proposals array reached...");
+  }
 }
 
 main().catch((error) => {
