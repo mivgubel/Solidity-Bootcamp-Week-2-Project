@@ -60,4 +60,6 @@ contract CustomBallot {
             voteToken.getPastVotes(msg.sender, referenceBlock) -
             spentVotePower[msg.sender];
     }
+
+    
 }
