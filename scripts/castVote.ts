@@ -1,6 +1,6 @@
 import "dotenv/config";
 import * as ballotJson from "../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
-import { Ballot } from "../../typechain";
+import { CustomBallot } from "../typechain";
 import { Contract, ethers } from "ethers";
 import { ethers as eth } from "hardhat";
 
