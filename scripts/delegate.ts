@@ -2,8 +2,10 @@ import { ethers, Contract } from "ethers";
 import "dotenv/config";
 import { CustomBallot, MyToken } from "../typechain";
 import * as TokenJson from "../artifacts/contracts/Token.sol/MyToken.json";
-// import * as CustomBallotJson from "../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
 import { ethers as eth } from "hardhat";
+
+const TOKEN_CONTRACT_ADDRESS = 
+"0x45fa02999Fb4f5E7C6e64cC1064D61A9fcBF5F14";
 
 const EXPOSED_KEY =
   "8da4ef21b864d2cc526dbdb2a120bd2874c36c9d0a1fb7f8c63d7f7a8b41de8f";
@@ -30,42 +32,33 @@ async function main() {
   // Get Contracts - TokenContract + BallotContract:
   console.log("== Deploy Contracts ==");
   const TokenContract: MyToken = new Contract(
-    "0x45fa02999Fb4f5E7C6e64cC1064D61A9fcBF5F14",
+    TOKEN_CONTRACT_ADDRESS,
     TokenJson.abi,
     signer
   ) as MyToken;
-  /*
-  const BallotContract: CustomBallot = new Contract(
-    "0xeFdBAac2e197331CF8dBc6eb057EC6e62f8019AC",
-    CustomBallotJson.abi,
-    signer
-  ) as CustomBallot;
-*/
-  // Get voting poower:
 
   // Start Delegating:
   console.log("== Delegating ==");
-
-  const delegateTransaction3 = await TokenContract.delegate(wallet.address);
-  const receipt3 = await delegateTransaction3.wait();
-  console.log(
-    `Self Delegation 2: for ${wallet.address} on trasanction: ${receipt3.transactionHash}`
-  );
-
-  const delegateTransaction = await TokenContract.connect(accounts[0]).delegate(
-    accounts[0].address
-  );
+  const delegateTransaction = await TokenContract.delegate(wallet.address);
   const receipt = await delegateTransaction.wait();
   console.log(
-    `Self Delegation 2: for ${accounts[0].address} on trasanction: ${receipt.transactionHash}`
+    `Self Delegation 1: for ${wallet.address} on trasanction: ${receipt.transactionHash}`
   );
 
-  const delegateTransaction2 = await TokenContract.connect(
-    accounts[1]
-  ).delegate(accounts[1].address);
+  const delegateTransaction2 = await TokenContract.connect(accounts[0]).delegate(
+    accounts[0].address
+  );
   const receipt2 = await delegateTransaction2.wait();
   console.log(
-    `Self Delegation 2: for ${accounts[1].address} on trasanction: ${receipt2.transactionHash}`
+    `Self Delegation 2: for ${accounts[0].address} on trasanction: ${receipt2.transactionHash}`
+  );
+
+  const delegateTransaction3 = await TokenContract.connect(
+    accounts[1]
+  ).delegate(accounts[1].address);
+  const receipt3 = await delegateTransaction3.wait();
+  console.log(
+    `Self Delegation 3: for ${accounts[1].address} on trasanction: ${receipt3.transactionHash}`
   );
 
   // Voting status:
